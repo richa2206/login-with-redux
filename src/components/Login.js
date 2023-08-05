@@ -7,15 +7,46 @@ const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUserPass] = useState(false);
+  const [passErr, setPassErr] = useState(false);
 
   const dispatch = useDispatch();
   console.log("inside login func");
 
+  function userHandler(e) {
+    let val = e.target.value;
+    setName(val);
+    if (val.length < 3) {
+      setUserPass(true);
+    } else {
+      setUserPass(false);
+    }
+  }
+
+  const passHandler = (e) => {
+    let item = e.target.value;
+    setPassword(item);
+    if (item.length < 3) {
+      setPassErr(true);
+    } else {
+      setPassErr(false);
+    }
+  };
   const handleSubmit = (e) => {
+    if (user.length || passErr.length < 3) {
+      alert("please provide valid info");
+    } else {
+      dispatch(
+        login({
+          name,
+          email: email,
+          password: password,
+          loggedIn: true,
+        })
+      );
+    }
     e.preventDefault();
     console.log("inside handlesubmit");
-
-    dispatch(login());
   };
 
   return (
@@ -25,12 +56,11 @@ const Login = () => {
         <input
           type="name"
           value={name}
-          placeholder="Name"
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
+          placeholder="Username"
+          onChange={userHandler}
         />{" "}
         <br />
+        {user ? <span>username not valid</span> : ""} <br />
         <input
           type="email"
           value={email}
@@ -39,16 +69,15 @@ const Login = () => {
             setEmail(e.target.value);
           }}
         />{" "}
-        <br />
+        <br /> <br />
         <input
           type="password"
           value={password}
           placeholder="Password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
+          onChange={passHandler}
         />
         <br />
+        {passErr ? <span>Password length not good</span> : ""} <br />
         <button type="submit_btn" className="submit__btn">
           Submit
         </button>
