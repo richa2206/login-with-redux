@@ -33,25 +33,26 @@ const Login = () => {
     }
   };
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (user.length || passErr.length < 3) {
       alert("please provide valid info");
     } else {
-      dispatch(
-        login({
+      dispatch({
+        type: "LOGIN",
+        payload: {
           name,
           email: email,
           password: password,
           loggedIn: true,
-        })
-      );
+        },
+      });
     }
-    e.preventDefault();
     console.log("inside handlesubmit");
   };
 
   return (
     <div className="login">
-      <form className="login__form" onSubmit={handleSubmit}>
+      <div className="login__form">
         <h1>Login</h1>
         <input
           type="name"
@@ -78,10 +79,10 @@ const Login = () => {
         />
         <br />
         {passErr ? <span>Password length not good</span> : ""} <br />
-        <button type="submit_btn" className="submit__btn">
+        <button onClick={handleSubmit} className="submit__btn">
           Submit
         </button>
-      </form>
+      </div>
     </div>
   );
 };

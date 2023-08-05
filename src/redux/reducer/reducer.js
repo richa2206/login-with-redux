@@ -1,6 +1,11 @@
 // import { LOGIN, LOGOUT } from "../constants";
 const initialState = {
-  users: "null",
+  users: {
+    name: "",
+    email: "",
+    password: "",
+    loggedIn: false,
+  },
 };
 
 function userReducer(state = initialState, action) {
@@ -8,7 +13,15 @@ function userReducer(state = initialState, action) {
     case "LOGIN":
       return { ...state, users: action.payload };
     case "LOGOUT":
-      return { ...state, users: null };
+      return {
+        ...state,
+        users: {
+          name: "",
+          email: "",
+          password: "",
+          loggedIn: false,
+        },
+      };
     default:
       return state;
   }
