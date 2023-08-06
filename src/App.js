@@ -10,7 +10,7 @@ function App() {
   const user = useSelector((data) => data.users);
   return (
     <div className="App">
-      <div>{JSON.stringify(user)}</div>
+      {/* <div>{JSON.stringify(user)}</div> */}
       {user.name.length <= 0 ? <Login /> : <Logout />}
     </div>
   );
